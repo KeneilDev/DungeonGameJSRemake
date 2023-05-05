@@ -1,8 +1,21 @@
-// Game loop
 export function gameLoop(update, render) {
-    // Run the update and render functions in a loop
-    requestAnimationFrame(() => gameLoop(update, render));
-    update();
+  let lastTime = 0;
+
+  function loop(timeStamp) {
+    // Calculate the time elapsed since the last frame
+    const deltaTime = timeStamp - lastTime;
+    lastTime = timeStamp;
+
+    // Update the game state
+    update(deltaTime);
+
+    // Render the game
     render();
+
+    // Call the next frame
+    window.requestAnimationFrame(loop);
   }
-  
+
+  // Start the game loop
+  window.requestAnimationFrame(loop);
+}
